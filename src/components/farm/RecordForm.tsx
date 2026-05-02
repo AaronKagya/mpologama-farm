@@ -45,14 +45,20 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
       return;
     }
     setLoading(true);
+    const d = parsed.data;
     const payload = {
-      ...parsed.data,
+      date: d.date,
+      hens_alive: d.hens_alive,
+      eggs_collected: d.eggs_collected,
+      broken_eggs: d.broken_eggs,
+      feed_kg: d.feed_kg,
+      deaths: d.deaths,
       water_liters:
-        parsed.data.water_liters === "" || parsed.data.water_liters === undefined
+        d.water_liters === "" || d.water_liters === undefined
           ? null
-          : Number(parsed.data.water_liters),
+          : Number(d.water_liters),
     };
-    const { error } = await supabase.from("daily_records").upsert([payload], { onConflict: "date" });
+    const { error } = await supabase.from("daily_records").upsert(payload, { onConflict: "date" });
     setLoading(false);
     if (error) {
       toast.error(error.message);
