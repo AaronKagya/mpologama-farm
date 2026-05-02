@@ -52,7 +52,7 @@ const Index = () => {
               <Feather className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-base font-semibold tracking-tight">Layer Farm Dashboard</h1>
+              <h1 className="text-base font-semibold tracking-tight">Mpologoma Farm</h1>
               <p className="text-xs text-muted-foreground">Daily operations & egg production</p>
             </div>
           </div>
@@ -141,7 +141,7 @@ const Index = () => {
       </main>
 
       <footer className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
-        Layer Farm Dashboard · Data updates in real time
+        Mpologoma Farm · Data updates in real time
       </footer>
     </div>
   );
