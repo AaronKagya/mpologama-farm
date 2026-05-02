@@ -52,7 +52,7 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
           ? null
           : Number(parsed.data.water_liters),
     };
-    const { error } = await supabase.from("daily_records").upsert(payload, { onConflict: "date" });
+    const { error } = await supabase.from("daily_records").upsert([payload], { onConflict: "date" });
     setLoading(false);
     if (error) {
       toast.error(error.message);
