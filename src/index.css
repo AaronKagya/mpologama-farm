@@ -2,95 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Poultry Farm Dashboard — clean, light, agricultural design system. All HSL. */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 60 20% 98%;
+    --foreground: 150 15% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 150 15% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 150 15% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Farm green primary */
+    --primary: 142 45% 32%;
+    --primary-foreground: 60 20% 98%;
+    --primary-soft: 142 40% 94%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm egg-shell secondary */
+    --secondary: 40 35% 94%;
+    --secondary-foreground: 150 20% 18%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 60 12% 95%;
+    --muted-foreground: 150 8% 42%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 32 75% 55%;
+    --accent-foreground: 0 0% 100%;
+    --accent-soft: 32 80% 95%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-soft: 0 70% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 30 30% 12%;
+    --warning-soft: 38 95% 95%;
 
-    --radius: 0.5rem;
+    --success: 142 60% 38%;
+    --success-foreground: 0 0% 100%;
+    --success-soft: 142 50% 95%;
+
+    --border: 150 12% 88%;
+    --input: 150 12% 88%;
+    --ring: 142 45% 32%;
+
+    --radius: 0.75rem;
+
+    --chart-1: 142 45% 38%;
+    --chart-2: 32 80% 55%;
+    --chart-3: 200 65% 45%;
+    --chart-4: 280 40% 55%;
+
+    --shadow-card: 0 1px 2px hsl(150 15% 12% / 0.04), 0 4px 16px hsl(150 15% 12% / 0.04);
+    --gradient-primary: linear-gradient(135deg, hsl(142 45% 32%), hsl(142 55% 42%));
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 150 15% 8%;
+    --foreground: 60 20% 96%;
+    --card: 150 15% 11%;
+    --card-foreground: 60 20% 96%;
+    --popover: 150 15% 11%;
+    --popover-foreground: 60 20% 96%;
+    --primary: 142 50% 50%;
+    --primary-foreground: 150 15% 8%;
+    --primary-soft: 142 30% 18%;
+    --secondary: 150 10% 16%;
+    --secondary-foreground: 60 20% 96%;
+    --muted: 150 10% 16%;
+    --muted-foreground: 150 8% 65%;
+    --accent: 32 75% 55%;
+    --accent-foreground: 150 15% 8%;
+    --accent-soft: 32 30% 18%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-soft: 0 40% 18%;
+    --warning: 38 90% 55%;
+    --warning-foreground: 30 30% 12%;
+    --warning-soft: 38 30% 18%;
+    --success: 142 55% 45%;
+    --success-foreground: 0 0% 100%;
+    --success-soft: 142 30% 18%;
+    --border: 150 10% 20%;
+    --input: 150 10% 20%;
+    --ring: 142 50% 50%;
   }
 }
 
@@ -98,8 +103,8 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
