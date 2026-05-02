@@ -6,6 +6,7 @@ import { TrendChart } from "@/components/farm/TrendChart";
 import { RecordsTable } from "@/components/farm/RecordsTable";
 import { RecordForm } from "@/components/farm/RecordForm";
 import { AlertList } from "@/components/farm/AlertList";
+import { UserMenu } from "@/components/farm/UserMenu";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Egg, Activity, Heart, Wheat, Download, Sparkles, Feather } from "lucide-react";
@@ -61,6 +62,7 @@ const Index = () => {
               <Download className="h-4 w-4" /> <span className="hidden sm:inline">Export CSV</span>
             </Button>
             <RecordForm onSaved={load} />
+            <UserMenu />
           </div>
         </div>
       </header>
