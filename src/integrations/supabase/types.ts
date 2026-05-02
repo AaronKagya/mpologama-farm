@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      daily_records: {
+        Row: {
+          broken_eggs: number
+          created_at: string
+          date: string
+          deaths: number
+          eggs_collected: number
+          feed_efficiency: number | null
+          feed_kg: number
+          hens_alive: number
+          id: string
+          mortality_rate: number | null
+          production_rate: number | null
+          water_liters: number | null
+        }
+        Insert: {
+          broken_eggs?: number
+          created_at?: string
+          date: string
+          deaths?: number
+          eggs_collected: number
+          feed_efficiency?: number | null
+          feed_kg: number
+          hens_alive: number
+          id?: string
+          mortality_rate?: number | null
+          production_rate?: number | null
+          water_liters?: number | null
+        }
+        Update: {
+          broken_eggs?: number
+          created_at?: string
+          date?: string
+          deaths?: number
+          eggs_collected?: number
+          feed_efficiency?: number | null
+          feed_kg?: number
+          hens_alive?: number
+          id?: string
+          mortality_rate?: number | null
+          production_rate?: number | null
+          water_liters?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
