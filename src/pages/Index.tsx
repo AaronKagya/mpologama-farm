@@ -6,6 +6,7 @@ import { TrendChart } from "@/components/farm/TrendChart";
 import { RecordsTable } from "@/components/farm/RecordsTable";
 import { RecordForm } from "@/components/farm/RecordForm";
 import { AlertList } from "@/components/farm/AlertList";
+import { ActivityLog } from "@/components/farm/ActivityLog";
 import { UserMenu } from "@/components/farm/UserMenu";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -159,7 +160,12 @@ const Index = () => {
               <TrendChart records={records} title="Feed efficiency (kg/egg)" dataKey="feed_efficiency" color="hsl(var(--chart-3))" />
             </section>
 
-            <RecordsTable records={records} onChanged={load} />
+            <div className="grid gap-4 lg:grid-cols-3">
+              <div className="lg:col-span-2">
+                <RecordsTable records={records} onChanged={load} />
+              </div>
+              <ActivityLog />
+            </div>
           </>
         )}
       </main>
