@@ -9,7 +9,7 @@ import { AlertList } from "@/components/farm/AlertList";
 import { UserMenu } from "@/components/farm/UserMenu";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Egg, Activity, Heart, Wheat, Download, Sparkles, Feather } from "lucide-react";
+import { Egg, Activity, Heart, Wheat, Download, Sparkles, Feather, Sigma, Percent } from "lucide-react";
 import { toast } from "sonner";
 
 const Index = () => {
@@ -32,6 +32,14 @@ const Index = () => {
 
   const latest = records[0];
   const alerts = computeAlerts(records);
+
+  const totalEggs = records.reduce((sum, r) => sum + (r.eggs_collected ?? 0), 0);
+  const prodRates = records
+    .map((r) => Number(r.production_rate))
+    .filter((n) => !Number.isNaN(n) && n > 0);
+  const avgProduction = prodRates.length
+    ? prodRates.reduce((a, b) => a + b, 0) / prodRates.length
+    : 0;
 
   const downloadCSV = () => {
     const csv = exportToCSV(records);
@@ -75,6 +83,20 @@ const Index = () => {
             {alerts.length > 0 && <AlertList alerts={alerts} />}
 
             <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+              <KPICard
+                label="Total eggs (all time)"
+                value={totalEggs.toLocaleString()}
+                hint={`${records.length} day${records.length === 1 ? "" : "s"} recorded`}
+                icon={Sigma}
+                tone="accent"
+              />
+              <KPICard
+                label="Avg production"
+                value={records.length ? `${avgProduction.toFixed(1)}%` : "—"}
+                hint="Across all records"
+                icon={Percent}
+                tone="primary"
+              />
               <KPICard
                 label="Eggs today"
                 value={latest ? latest.eggs_collected.toLocaleString() : "—"}
