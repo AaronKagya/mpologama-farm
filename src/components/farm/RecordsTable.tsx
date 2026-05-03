@@ -76,6 +76,7 @@ export const RecordsTable = ({ records, onChanged }: Props) => {
               <th className="px-4 py-2.5 text-right font-medium"><HeaderBtn k="production_rate" label="Prod %" /></th>
               <th className="px-4 py-2.5 text-right font-medium"><HeaderBtn k="mortality_rate" label="Mort %" /></th>
               <th className="px-4 py-2.5 text-right font-medium">Feed/egg</th>
+              <th className="px-4 py-2.5 text-right font-medium">Profit</th>
               <th className="px-4 py-2.5"></th>
             </tr>
           </thead>
