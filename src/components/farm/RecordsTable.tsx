@@ -92,6 +92,9 @@ export const RecordsTable = ({ records, onChanged }: Props) => {
                 <td className="px-4 py-2.5 text-right tabular-nums">{r.production_rate}%</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{r.mortality_rate}%</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{r.feed_efficiency ?? "—"}</td>
+                <td className={`px-4 py-2.5 text-right tabular-nums font-medium ${(r.profit ?? 0) < 0 ? "text-destructive" : ""}`}>
+                  {r.profit != null ? Number(r.profit).toLocaleString() : "—"}
+                </td>
                 <td className="px-4 py-2.5 text-right">
                   <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-destructive" onClick={() => remove(r.id)}>
                     <Trash2 className="h-3.5 w-3.5" />
@@ -100,7 +103,7 @@ export const RecordsTable = ({ records, onChanged }: Props) => {
               </tr>
             ))}
             {sorted.length === 0 && (
-              <tr><td colSpan={10} className="p-8 text-center text-sm text-muted-foreground">No records yet.</td></tr>
+              <tr><td colSpan={11} className="p-8 text-center text-sm text-muted-foreground">No records yet.</td></tr>
             )}
           </tbody>
         </table>
