@@ -9,7 +9,6 @@ import { Plus, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useFarm } from "@/hooks/useFarm";
 
 const schema = z.object({
   date: z.string().min(1, "Date required"),
@@ -24,7 +23,6 @@ const schema = z.object({
 const today = () => new Date().toISOString().slice(0, 10);
 
 export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
-  const { selectedFlock, flocks } = useFarm();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -38,11 +36,9 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
   });
 
   const setField = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
-  const targetFlock = selectedFlock ?? flocks[0];
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!targetFlock) { toast.error("Create a flock first"); return; }
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast.error(parsed.error.errors[0].message);
@@ -51,7 +47,6 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
     setLoading(true);
     const d = parsed.data;
     const payload = {
-      flock_id: targetFlock.id,
       date: d.date,
       hens_alive: d.hens_alive,
       eggs_collected: d.eggs_collected,
@@ -63,9 +58,7 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
           ? null
           : Number(d.water_liters),
     };
-    const { error } = await supabase
-      .from("daily_records")
-      .upsert(payload, { onConflict: "flock_id,date" });
+    const { error } = await supabase.from("daily_records").upsert(payload, { onConflict: "date" });
     setLoading(false);
     if (error) {
       toast.error(error.message);
@@ -90,13 +83,13 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2" disabled={!targetFlock}>
+        <Button className="gap-2">
           <Plus className="h-4 w-4" /> New entry
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Daily record {targetFlock && <span className="text-xs font-normal text-muted-foreground">· {targetFlock.flock_name}</span>}</DialogTitle>
+          <DialogTitle>Daily record</DialogTitle>
         </DialogHeader>
         <form onSubmit={submit} className="grid grid-cols-2 gap-3">
           {fields.map((f) => (
@@ -117,7 +110,7 @@ export const RecordForm = ({ onSaved }: { onSaved: () => void }) => {
             </div>
           ))}
           <p className="col-span-2 text-xs text-muted-foreground">
-            Production %, mortality %, feed efficiency and profit are calculated automatically.
+            Production %, mortality % and feed efficiency are calculated automatically on save.
           </p>
           <DialogFooter className="col-span-2 mt-2">
             <Button type="submit" disabled={loading} className="w-full">
