@@ -53,47 +53,158 @@ export type Database = {
       daily_records: {
         Row: {
           broken_eggs: number
+          cost: number | null
           created_at: string
           date: string
           deaths: number
           eggs_collected: number
           feed_efficiency: number | null
           feed_kg: number
+          flock_id: string
           hens_alive: number
           id: string
           mortality_rate: number | null
           production_rate: number | null
+          profit: number | null
+          revenue: number | null
           water_liters: number | null
         }
         Insert: {
           broken_eggs?: number
+          cost?: number | null
           created_at?: string
           date: string
           deaths?: number
           eggs_collected: number
           feed_efficiency?: number | null
           feed_kg: number
+          flock_id: string
           hens_alive: number
           id?: string
           mortality_rate?: number | null
           production_rate?: number | null
+          profit?: number | null
+          revenue?: number | null
           water_liters?: number | null
         }
         Update: {
           broken_eggs?: number
+          cost?: number | null
           created_at?: string
           date?: string
           deaths?: number
           eggs_collected?: number
           feed_efficiency?: number | null
           feed_kg?: number
+          flock_id?: string
           hens_alive?: number
           id?: string
           mortality_rate?: number | null
           production_rate?: number | null
+          profit?: number | null
+          revenue?: number | null
           water_liters?: number | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "daily_records_flock_id_fkey"
+            columns: ["flock_id"]
+            isOneToOne: false
+            referencedRelation: "flocks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      farm_settings: {
+        Row: {
+          farm_id: string
+          feed_cost_per_kg: number
+          price_per_tray: number
+          updated_at: string
+        }
+        Insert: {
+          farm_id: string
+          feed_cost_per_kg?: number
+          price_per_tray?: number
+          updated_at?: string
+        }
+        Update: {
+          farm_id?: string
+          feed_cost_per_kg?: number
+          price_per_tray?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "farm_settings_farm_id_fkey"
+            columns: ["farm_id"]
+            isOneToOne: true
+            referencedRelation: "farms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      farms: {
+        Row: {
+          created_at: string
+          farm_name: string
+          id: string
+          location: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          farm_name: string
+          id?: string
+          location?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          farm_name?: string
+          id?: string
+          location?: string | null
+          user_id?: string
+        }
         Relationships: []
+      }
+      flocks: {
+        Row: {
+          breed: string | null
+          created_at: string
+          farm_id: string
+          flock_name: string
+          id: string
+          initial_birds: number
+          start_date: string
+        }
+        Insert: {
+          breed?: string | null
+          created_at?: string
+          farm_id: string
+          flock_name: string
+          id?: string
+          initial_birds?: number
+          start_date?: string
+        }
+        Update: {
+          breed?: string | null
+          created_at?: string
+          farm_id?: string
+          flock_name?: string
+          id?: string
+          initial_birds?: number
+          start_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flocks_farm_id_fkey"
+            columns: ["farm_id"]
+            isOneToOne: false
+            referencedRelation: "farms"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -127,7 +238,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      user_owns_farm: { Args: { _farm_id: string }; Returns: boolean }
+      user_owns_flock: { Args: { _flock_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
