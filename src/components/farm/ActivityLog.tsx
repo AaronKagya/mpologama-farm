@@ -73,9 +73,8 @@ export const ActivityLog = () => {
 
   // Log sign-in once per session per user
   useEffect(() => {
-    if (!user) return;
-    const key = `signin_logged_${user.id}_${user.created_at ?? ""}`;
-    const sessionKey = `signin_session_${user.id}`;
+    if (!user || !selectedFarm) return;
+    const sessionKey = `signin_session_${user.id}_${selectedFarm.id}`;
     if (sessionStorage.getItem(sessionKey)) return;
     sessionStorage.setItem(sessionKey, "1");
     supabase
@@ -86,9 +85,10 @@ export const ActivityLog = () => {
         user_name: (user.user_metadata as any)?.display_name || (user.user_metadata as any)?.full_name || user.email?.split("@")[0],
         action: "signed_in",
         entity: "session",
+        farm_id: selectedFarm.id,
       } as any)
       .then(() => load());
-  }, [user, load]);
+  }, [user, selectedFarm?.id, load]);
 
   useEffect(() => {
     load();
