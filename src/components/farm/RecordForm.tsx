@@ -104,15 +104,15 @@ export const RecordForm = ({ onSaved, record, open: openProp, onOpenChange, trig
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger !== undefined ? (
+      {trigger ? (
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-      ) : !record && (
+      ) : !record && trigger === undefined ? (
         <DialogTrigger asChild>
           <Button className="gap-2" disabled={!targetFlock}>
             <Plus className="h-4 w-4" /> <span className="hidden sm:inline">New entry</span><span className="sm:hidden">New</span>
           </Button>
         </DialogTrigger>
-      )}
+      ) : null}
       <DialogContent className="w-[calc(100vw-1.5rem)] max-w-md max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-base">
