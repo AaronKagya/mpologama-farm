@@ -11,6 +11,7 @@ import { UserMenu } from "@/components/farm/UserMenu";
 import { FarmSwitcher } from "@/components/farm/FarmSwitcher";
 import { FlockSelector } from "@/components/farm/FlockSelector";
 import { FarmSettingsDialog } from "@/components/farm/FarmSettingsDialog";
+import { FarmMembersDialog } from "@/components/farm/FarmMembersDialog";
 import { useFarm } from "@/hooks/useFarm";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
