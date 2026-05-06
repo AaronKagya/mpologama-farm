@@ -87,6 +87,7 @@ const Index = () => {
             <FarmSwitcher />
             <FlockSelector />
             <div className="flex-1" />
+            <FarmMembersDialog />
             <FarmSettingsDialog />
             <Button variant="outline" size="sm" onClick={downloadCSV} className="gap-2">
               <Download className="h-4 w-4" /> <span className="hidden sm:inline">CSV</span>
