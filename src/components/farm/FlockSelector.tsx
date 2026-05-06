@@ -8,7 +8,7 @@ import {
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter,
 } from "@/components/ui/dialog";
-import { Bird, Plus } from "lucide-react";
+import { Bird, Plus, Pencil } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useFarm } from "@/hooks/useFarm";
 import { toast } from "sonner";
@@ -16,8 +16,38 @@ import { toast } from "sonner";
 export const FlockSelector = () => {
   const { selectedFarm, flocks, selectedFlock, setSelectedFlockId, reloadFlocks } = useFarm();
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [form, setForm] = useState({ flock_name: "", start_date: new Date().toISOString().slice(0, 10), initial_birds: "0", breed: "" });
+  const [editForm, setEditForm] = useState({ flock_name: "", start_date: "", initial_birds: "0", breed: "" });
   const [saving, setSaving] = useState(false);
+
+  const openEdit = () => {
+    if (!selectedFlock) return;
+    setEditForm({
+      flock_name: selectedFlock.flock_name,
+      start_date: selectedFlock.start_date,
+      initial_birds: String(selectedFlock.initial_birds),
+      breed: selectedFlock.breed ?? "",
+    });
+    setEditOpen(true);
+  };
+
+  const saveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedFlock) return;
+    setSaving(true);
+    const { error } = await supabase.from("flocks").update({
+      flock_name: editForm.flock_name.trim(),
+      start_date: editForm.start_date,
+      initial_birds: Number(editForm.initial_birds) || 0,
+      breed: editForm.breed.trim() || null,
+    }).eq("id", selectedFlock.id);
+    setSaving(false);
+    if (error) return toast.error(error.message);
+    toast.success("Flock updated");
+    await reloadFlocks();
+    setEditOpen(false);
+  };
 
   const create = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,6 +116,37 @@ export const FlockSelector = () => {
             </div>
             <DialogFooter>
               <Button type="submit" disabled={saving} className="w-full">Create flock</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      <Button variant="outline" size="icon" className="h-9 w-9" aria-label="Edit flock" onClick={openEdit} disabled={!selectedFlock}>
+        <Pencil className="h-4 w-4" />
+      </Button>
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader><DialogTitle>Edit flock</DialogTitle></DialogHeader>
+          <form onSubmit={saveEdit} className="space-y-3">
+            <div>
+              <Label className="text-xs">Flock name</Label>
+              <Input value={editForm.flock_name} onChange={(e) => setEditForm({ ...editForm, flock_name: e.target.value })} required className="mt-1" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs">Start date</Label>
+                <Input type="date" value={editForm.start_date} onChange={(e) => setEditForm({ ...editForm, start_date: e.target.value })} className="mt-1" />
+              </div>
+              <div>
+                <Label className="text-xs">Initial birds</Label>
+                <Input type="number" min={0} value={editForm.initial_birds} onChange={(e) => setEditForm({ ...editForm, initial_birds: e.target.value })} className="mt-1" />
+              </div>
+            </div>
+            <div>
+              <Label className="text-xs">Breed (optional)</Label>
+              <Input value={editForm.breed} onChange={(e) => setEditForm({ ...editForm, breed: e.target.value })} className="mt-1" />
+            </div>
+            <DialogFooter>
+              <Button type="submit" disabled={saving} className="w-full">Save changes</Button>
             </DialogFooter>
           </form>
         </DialogContent>
