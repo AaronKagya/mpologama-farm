@@ -106,6 +106,24 @@ export const FarmSwitcher = () => {
           </form>
         </DialogContent>
       </Dialog>
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader><DialogTitle>Edit farm</DialogTitle></DialogHeader>
+          <form onSubmit={saveEdit} className="space-y-3">
+            <div>
+              <Label className="text-xs">Farm name</Label>
+              <Input value={editName} onChange={(e) => setEditName(e.target.value)} required className="mt-1" />
+            </div>
+            <div>
+              <Label className="text-xs">Location (optional)</Label>
+              <Input value={editLocation} onChange={(e) => setEditLocation(e.target.value)} className="mt-1" />
+            </div>
+            <DialogFooter>
+              <Button type="submit" disabled={saving} className="w-full">Save changes</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
