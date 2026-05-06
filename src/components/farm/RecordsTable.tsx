@@ -113,6 +113,7 @@ export const RecordsTable = ({ records, onChanged }: Props) => {
           </tbody>
         </table>
       </div>
+      <RecordForm record={editing} open={!!editing} onOpenChange={(o) => !o && setEditing(null)} onSaved={onChanged} trigger={null} />
     </Card>
   );
 };
