@@ -11,6 +11,7 @@ import { UserMenu } from "@/components/farm/UserMenu";
 import { FarmSwitcher } from "@/components/farm/FarmSwitcher";
 import { FlockSelector } from "@/components/farm/FlockSelector";
 import { FarmSettingsDialog } from "@/components/farm/FarmSettingsDialog";
+import { FarmMembersDialog } from "@/components/farm/FarmMembersDialog";
 import { useFarm } from "@/hooks/useFarm";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -86,6 +87,7 @@ const Index = () => {
             <FarmSwitcher />
             <FlockSelector />
             <div className="flex-1" />
+            <FarmMembersDialog />
             <FarmSettingsDialog />
             <Button variant="outline" size="sm" onClick={downloadCSV} className="gap-2">
               <Download className="h-4 w-4" /> <span className="hidden sm:inline">CSV</span>

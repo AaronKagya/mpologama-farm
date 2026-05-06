@@ -21,6 +21,7 @@ export type Database = {
           details: Json | null
           entity: string
           entity_date: string | null
+          farm_id: string | null
           id: string
           user_email: string | null
           user_id: string | null
@@ -32,6 +33,7 @@ export type Database = {
           details?: Json | null
           entity?: string
           entity_date?: string | null
+          farm_id?: string | null
           id?: string
           user_email?: string | null
           user_id?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           details?: Json | null
           entity?: string
           entity_date?: string | null
+          farm_id?: string | null
           id?: string
           user_email?: string | null
           user_id?: string | null
@@ -111,6 +114,38 @@ export type Database = {
             columns: ["flock_id"]
             isOneToOne: false
             referencedRelation: "flocks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      farm_members: {
+        Row: {
+          created_at: string
+          farm_id: string
+          id: string
+          role: Database["public"]["Enums"]["farm_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          farm_id: string
+          id?: string
+          role?: Database["public"]["Enums"]["farm_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          farm_id?: string
+          id?: string
+          role?: Database["public"]["Enums"]["farm_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "farm_members_farm_id_fkey"
+            columns: ["farm_id"]
+            isOneToOne: false
+            referencedRelation: "farms"
             referencedColumns: ["id"]
           },
         ]
@@ -238,11 +273,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      has_farm_role: {
+        Args: {
+          _farm_id: string
+          _roles: Database["public"]["Enums"]["farm_role"][]
+        }
+        Returns: boolean
+      }
+      is_farm_member: { Args: { _farm_id: string }; Returns: boolean }
       user_owns_farm: { Args: { _farm_id: string }; Returns: boolean }
       user_owns_flock: { Args: { _flock_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      farm_role: "owner" | "manager" | "viewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -369,6 +412,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      farm_role: ["owner", "manager", "viewer"],
+    },
   },
 } as const

@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { format, parseISO } from "date-fns";
 import { Activity, RefreshCw, LogIn, Plus, Pencil, Trash2 } from "lucide-react";
+import { useFarm } from "@/hooks/useFarm";
 
 type Entry = {
   id: string;
@@ -53,25 +54,27 @@ const summarize = (e: Entry) => {
 
 export const ActivityLog = () => {
   const { user } = useAuth();
+  const { selectedFarm } = useFarm();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
+    if (!selectedFarm) { setEntries([]); setLoading(false); return; }
     setLoading(true);
     const { data } = await supabase
       .from("activity_log" as any)
       .select("*")
+      .eq("farm_id", selectedFarm.id)
       .order("created_at", { ascending: false })
       .limit(50);
     setEntries((data as any) ?? []);
     setLoading(false);
-  }, []);
+  }, [selectedFarm?.id]);
 
   // Log sign-in once per session per user
   useEffect(() => {
-    if (!user) return;
-    const key = `signin_logged_${user.id}_${user.created_at ?? ""}`;
-    const sessionKey = `signin_session_${user.id}`;
+    if (!user || !selectedFarm) return;
+    const sessionKey = `signin_session_${user.id}_${selectedFarm.id}`;
     if (sessionStorage.getItem(sessionKey)) return;
     sessionStorage.setItem(sessionKey, "1");
     supabase
@@ -82,9 +85,10 @@ export const ActivityLog = () => {
         user_name: (user.user_metadata as any)?.display_name || (user.user_metadata as any)?.full_name || user.email?.split("@")[0],
         action: "signed_in",
         entity: "session",
+        farm_id: selectedFarm.id,
       } as any)
       .then(() => load());
-  }, [user, load]);
+  }, [user, selectedFarm?.id, load]);
 
   useEffect(() => {
     load();

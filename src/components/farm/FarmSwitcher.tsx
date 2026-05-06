@@ -31,6 +31,7 @@ export const FarmSwitcher = () => {
       .insert({ user_id: user.id, farm_name: name.trim(), location: location.trim() || null })
       .select().single();
     if (!error && data) {
+      await supabase.from("farm_members" as any).insert({ farm_id: data.id, user_id: user.id, role: "owner" } as any);
       await supabase.from("farm_settings").insert({ farm_id: data.id });
       await supabase.from("flocks").insert({ farm_id: data.id, flock_name: "Flock 1" });
       toast.success("Farm created");
