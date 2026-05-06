@@ -119,6 +119,7 @@ export const FlockSelector = () => {
             </DialogFooter>
           </form>
         </DialogContent>
+      </Dialog>
       <Button variant="outline" size="icon" className="h-9 w-9" aria-label="Edit flock" onClick={openEdit} disabled={!selectedFlock}>
         <Pencil className="h-4 w-4" />
       </Button>
