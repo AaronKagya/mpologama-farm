@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { format, parseISO } from "date-fns";
 import { Activity, RefreshCw, LogIn, Plus, Pencil, Trash2 } from "lucide-react";
+import { useFarm } from "@/hooks/useFarm";
 
 type Entry = {
   id: string;
