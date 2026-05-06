@@ -8,7 +8,7 @@ import {
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter,
 } from "@/components/ui/dialog";
-import { Building2, Plus } from "lucide-react";
+import { Building2, Plus, Pencil } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useFarm } from "@/hooks/useFarm";
@@ -18,9 +18,33 @@ export const FarmSwitcher = () => {
   const { user } = useAuth();
   const { farms, selectedFarm, setSelectedFarmId, reloadFarms } = useFarm();
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editLocation, setEditLocation] = useState("");
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [saving, setSaving] = useState(false);
+
+  const openEdit = () => {
+    if (!selectedFarm) return;
+    setEditName(selectedFarm.farm_name);
+    setEditLocation(selectedFarm.location ?? "");
+    setEditOpen(true);
+  };
+
+  const saveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedFarm || !editName.trim()) return;
+    setSaving(true);
+    const { error } = await supabase.from("farms")
+      .update({ farm_name: editName.trim(), location: editLocation.trim() || null })
+      .eq("id", selectedFarm.id);
+    setSaving(false);
+    if (error) return toast.error(error.message);
+    toast.success("Farm updated");
+    await reloadFarms();
+    setEditOpen(false);
+  };
 
   const create = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +80,9 @@ export const FarmSwitcher = () => {
           ))}
         </SelectContent>
       </Select>
+      <Button variant="outline" size="icon" className="h-9 w-9" aria-label="Edit farm" onClick={openEdit} disabled={!selectedFarm}>
+        <Pencil className="h-4 w-4" />
+      </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" size="icon" className="h-9 w-9" aria-label="Add farm">
