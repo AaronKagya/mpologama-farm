@@ -54,19 +54,22 @@ const summarize = (e: Entry) => {
 
 export const ActivityLog = () => {
   const { user } = useAuth();
+  const { selectedFarm } = useFarm();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
+    if (!selectedFarm) { setEntries([]); setLoading(false); return; }
     setLoading(true);
     const { data } = await supabase
       .from("activity_log" as any)
       .select("*")
+      .eq("farm_id", selectedFarm.id)
       .order("created_at", { ascending: false })
       .limit(50);
     setEntries((data as any) ?? []);
     setLoading(false);
-  }, []);
+  }, [selectedFarm?.id]);
 
   // Log sign-in once per session per user
   useEffect(() => {
