@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Trash2, ArrowUpDown, Search } from "lucide-react";
+import { Trash2, ArrowUpDown, Search, Pencil } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { DailyRecord } from "@/lib/farm";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { RecordForm } from "./RecordForm";
 
 interface Props {
   records: DailyRecord[];
@@ -19,6 +20,7 @@ export const RecordsTable = ({ records, onChanged }: Props) => {
   const [sortKey, setSortKey] = useState<SortKey>("date");
   const [asc, setAsc] = useState(false);
   const [filter, setFilter] = useState("");
+  const [editing, setEditing] = useState<DailyRecord | null>(null);
 
   const filtered = records.filter((r) =>
     filter ? r.date.includes(filter) : true,
@@ -95,7 +97,10 @@ export const RecordsTable = ({ records, onChanged }: Props) => {
                 <td className={`px-4 py-2.5 text-right tabular-nums font-medium ${(r.profit ?? 0) < 0 ? "text-destructive" : ""}`}>
                   {r.profit != null ? Number(r.profit).toLocaleString() : "—"}
                 </td>
-                <td className="px-4 py-2.5 text-right">
+                <td className="px-4 py-2.5 text-right whitespace-nowrap">
+                  <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground" onClick={() => setEditing(r)}>
+                    <Pencil className="h-3.5 w-3.5" />
+                  </Button>
                   <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-destructive" onClick={() => remove(r.id)}>
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
