@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Feather, Egg, Activity, Heart, Wheat, Sparkles, DollarSign,
   Users, ShieldCheck, BarChart3, Smartphone, ArrowRight, Check,
@@ -44,6 +45,7 @@ const Landing = () => {
             <a href="#pricing" className="hover:text-foreground">Pricing</a>
           </nav>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             {!user && (
               <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
                 <Link to="/auth">Sign in</Link>

@@ -12,6 +12,7 @@ import { FarmSwitcher } from "@/components/farm/FarmSwitcher";
 import { FlockSelector } from "@/components/farm/FlockSelector";
 import { FarmSettingsDialog } from "@/components/farm/FarmSettingsDialog";
 import { FarmMembersDialog } from "@/components/farm/FarmMembersDialog";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useFarm } from "@/hooks/useFarm";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -80,6 +81,7 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               <UserMenu />
             </div>
           </div>
