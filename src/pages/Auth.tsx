@@ -20,7 +20,7 @@ const Auth = () => {
   const [displayName, setDisplayName] = useState("");
 
   useEffect(() => {
-    if (!authLoading && user) navigate("/", { replace: true });
+    if (!authLoading && user) navigate("/dashboard", { replace: true });
   }, [user, authLoading, navigate]);
 
   const signIn = async (e: React.FormEvent) => {
@@ -30,7 +30,7 @@ const Auth = () => {
     setLoading(false);
     if (error) return toast.error(error.message);
     toast.success("Welcome back");
-    navigate("/", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   const signUp = async (e: React.FormEvent) => {
@@ -40,25 +40,25 @@ const Auth = () => {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/`,
+        emailRedirectTo: `${window.location.origin}/dashboard`,
         data: { display_name: displayName || email.split("@")[0] },
       },
     });
     setLoading(false);
     if (error) return toast.error(error.message);
     toast.success("Account created");
-    navigate("/", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   const google = async () => {
     setLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/dashboard` });
     if (result.error) {
       setLoading(false);
       return toast.error(result.error.message ?? "Google sign-in failed");
     }
     if (result.redirected) return;
-    navigate("/", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   return (
