@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Feather, Egg, Activity, Heart, Wheat, Sparkles, DollarSign,
   Users, ShieldCheck, BarChart3, Smartphone, ArrowRight, Check,
