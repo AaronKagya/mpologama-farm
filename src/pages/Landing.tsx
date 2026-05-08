@@ -37,7 +37,7 @@ const Landing = () => {
             <div className="rounded-lg bg-primary p-2 text-primary-foreground">
               <Feather className="h-5 w-5" />
             </div>
-            <span className="font-semibold tracking-tight">Mpologoma Farm</span>
+            <span className="font-semibold tracking-tight">LayerLens</span>
           </Link>
           <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
             <a href="#features" className="hover:text-foreground">Features</a>
@@ -227,7 +227,7 @@ const Landing = () => {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-10 text-center sm:px-6 md:flex-row md:text-left">
           <div>
             <h3 className="text-2xl font-semibold tracking-tight">Run your farm like a business</h3>
-            <p className="text-sm opacity-90">Join farmers using Mpologoma to track every egg and every shilling.</p>
+            <p className="text-sm opacity-90">Join farmers using LayerLens to track every egg and every shilling.</p>
           </div>
           <Button asChild size="lg" variant="secondary" className="gap-2">
             <Link to={primaryHref}>{primaryLabel} <ArrowRight className="h-4 w-4" /></Link>
@@ -236,7 +236,7 @@ const Landing = () => {
       </section>
 
       <footer className="border-t border-border/60 py-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Mpologoma Farm · Multi-farm operating system
+        © {new Date().getFullYear()} LayerLens · Multi-farm operating system
       </footer>
     </div>
   );

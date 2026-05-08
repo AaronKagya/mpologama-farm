@@ -74,7 +74,7 @@ const Index = () => {
                 <Feather className="h-5 w-5" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-base font-semibold tracking-tight truncate">Mpologoma Farm</h1>
+                <h1 className="text-base font-semibold tracking-tight truncate">LayerLens</h1>
                 <p className="text-xs text-muted-foreground truncate">
                   {selectedFarm ? selectedFarm.farm_name : "Farm operating system"}
                 </p>
@@ -158,7 +158,7 @@ const Index = () => {
       </main>
 
       <footer className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
-        Mpologoma Farm · Multi-farm operating system
+        LayerLens · Multi-farm operating system
       </footer>
     </div>
   );
