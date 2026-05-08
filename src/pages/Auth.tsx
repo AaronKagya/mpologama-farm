@@ -69,7 +69,7 @@ const Auth = () => {
             <Feather className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">Mpologoma Farm</h1>
+            <h1 className="text-lg font-semibold tracking-tight">LayerLens</h1>
             <p className="text-xs text-muted-foreground">Sign in to manage your farm</p>
           </div>
         </div>
